@@ -1,66 +1,114 @@
-🌍 ClimaUp
-📌 Sobre o projeto
-Qual é o nome do projeto?
+# 🌍 ClimaUp
 
-[ClimaUp]
+## 📌 Sobre o projeto
 
-Qual problema relacionado às mudanças climáticas o projeto pretende abordar?
+**ClimaUp** é um projeto voltado à conscientização ambiental e ao combate às mudanças climáticas, incentivando pequenas ações que podem gerar impactos positivos no planeta.
 
-[O desperdício de energia, descarte errado de lixo, etc...]
+### Qual problema o projeto pretende abordar?
 
-Por que você escolheu esse problema?
+O desperdício de energia, o descarte incorreto de resíduos e outros hábitos prejudiciais ao meio ambiente.
 
-[Porque é o que mais tem a necessidade de ser resolvido.]
+### Por que esse problema foi escolhido?
 
-🎯 Objetivos
-Qual é o objetivo principal do projeto?
+Porque as mudanças climáticas e os problemas ambientais estão entre os grandes desafios da atualidade e precisam de ações individuais e coletivas.
 
-[Esse site ajudará as pessoas a reduzir os impactos ambientais negativos, mostrar temperatura, previsão de chuva, etc...]
+## 🎯 Objetivos
 
-Quem é o público-alvo?
+### Qual é o objetivo principal?
 
-[Principalmente jovens, adolescentes e crianças, pois creio que tirando as empresas e o governo, são os que mais ajudam nos impactos ambientais q vemos hoje.]
+Ajudar as pessoas a reduzir impactos ambientais negativos por meio de desafios práticos, informações sobre sustentabilidade e dados meteorológicos, como temperatura e previsão de chuva.
 
-Como o projeto poderá ajudar?
+### Quem é o público-alvo?
 
-[Ele mostrará a vantagem de ajudar o meio ambiente e o que acontece caso isso não acontecer, além de mostrar das maneiras mais simples até as mais difíceis, como podemos ajudar.]
+Principalmente crianças, adolescentes e jovens, incentivando a conscientização ambiental desde cedo.
 
-💡 Solução proposta
-Como o programa funcionará?
+### Como o projeto poderá ajudar?
 
-[Ele fará desafios práticos para ajudar o meio ambiente.]
+O ClimaUp apresentará os benefícios de atitudes sustentáveis, as consequências de hábitos prejudiciais ao meio ambiente e maneiras simples ou avançadas de contribuir para um planeta mais saudável.
 
-Quais serão as principais funcionalidades?
+## 💡 Solução proposta
 
-[Desafios interativos do nível fácil ao difícil.]
-[Mostrar o tempo, previsão de chuva, etc...]
-[Mostrar em que ele ajudou concluindo cada desafio]
-Qual será o diferencial do projeto?
+### Como o programa funcionará?
 
-[Ela pode ajudar as pessoas através de desafios a mudar o mundo pra melhor]
+O site oferecerá desafios práticos para incentivar hábitos sustentáveis no dia a dia, além de apresentar informações sobre o clima e o meio ambiente.
 
-🌱 Relação com as mudanças climáticas
-Quais aspectos do tema serão abordados?
+### Principais funcionalidades
 
-[Descartes de lixo errado, desperdício de energia, o que certas coisas podem causar, etc...]
+- 🌱 Desafios interativos com níveis de dificuldade diferentes.
+- 🌦️ Temperatura atual e previsão do tempo.
+- ♻️ Acompanhamento dos desafios concluídos e do progresso ambiental.
+- 📚 Informações educativas sobre sustentabilidade e mudanças climáticas.
 
-Quais fontes serão utilizadas na pesquisa?
+### Qual é o diferencial do projeto?
 
-[ChatGpt]
-[Nações Unidas]
-🛠️ Tecnologias utilizadas
-Quais tecnologias você pretende utilizar e por quê?
+O ClimaUp transforma a conscientização ambiental em uma experiência interativa, incentivando as pessoas a adotar hábitos sustentáveis por meio de desafios e acompanhamento do progresso.
 
-Python: 3.14
-Bibliotecas: Chart.js, Lucide, Leaflet, Lottie, Uiverse, Random, Sqlite3, Json
-Frameworks: Bootstrap, Pico css, Animate.css
-APIs ou banco de dados, se necessário: OpenAQ, OpenStreetMap, Open-Meteo
-🚀 Funcionalidades futuras
-O que você pretende implementar em versões futuras?
+## 🌱 Relação com as mudanças climáticas
 
-[Eu adicionaria um sistema mais completo de desafios, uma ofensiva de dias, os desafios completos, pontuação, notícias sobre o assunto, etc...]
+### Quais aspectos serão abordados?
 
-👥 Autores
-[Ricardo Lima Bastos]
+- Descarte correto de resíduos e reciclagem.
+- Desperdício de energia e água.
+- Poluição e seus impactos ambientais.
+- Mudanças climáticas e suas consequências.
+- Atitudes sustentáveis que podem ser aplicadas no cotidiano.
 
-[MIT](LICENSE). Weather data by Open-Meteo, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+### Fontes de pesquisa
+
+- [Nações Unidas — Ação Climática](https://www.un.org/en/climatechange)
+- [Open-Meteo — Documentação da API](https://open-meteo.com/en/docs)
+- [OpenAQ — Dados sobre qualidade do ar](https://openaq.org/)
+- ChatGPT, como ferramenta de apoio à pesquisa e ao desenvolvimento.
+
+## 🛠️ Tecnologias utilizadas
+
+### Linguagens
+
+- **HTML5:** estrutura das páginas.
+- **CSS3:** aparência e responsividade.
+- **JavaScript:** interatividade e funcionalidades do site.
+- **Python 3.14:** possível utilização no backend.
+
+### Bibliotecas e ferramentas
+
+- **Chart.js:** criação de gráficos.
+- **Lucide:** ícones.
+- **Leaflet:** mapas interativos.
+- **Lottie:** animações.
+- **Uiverse:** referências e componentes de interface.
+- **SQLite3:** armazenamento de dados.
+- **JSON:** organização e troca de dados.
+- **Random:** geração de valores ou escolhas aleatórias, quando necessário.
+
+### Frameworks e estilos
+
+- **Bootstrap:** componentes e layout responsivo.
+- **Pico CSS:** estilização leve.
+- **Animate.css:** animações.
+
+### APIs e serviços
+
+- **Open-Meteo:** previsão e dados meteorológicos.
+- **OpenStreetMap:** dados cartográficos para mapas.
+- **OpenAQ:** informações sobre qualidade do ar.
+
+*As tecnologias serão utilizadas conforme a necessidade de cada funcionalidade.*
+
+## 🚀 Funcionalidades futuras
+
+- Sistema mais completo de desafios ecológicos.
+- Sequência de dias consecutivos de participação.
+- Pontuação, níveis e conquistas.
+- Histórico de desafios concluídos.
+- Notícias e novidades sobre sustentabilidade e mudanças climáticas.
+- Estatísticas para acompanhar o progresso do usuário.
+
+## 👥 Autor
+
+**Ricardo Lima Bastos**
+
+## 📄 Licença
+
+Este projeto utiliza a licença [MIT](LICENSE).
+
+Os dados meteorológicos são fornecidos pela [Open-Meteo](https://open-meteo.com/) e disponibilizados sob a licença [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
