@@ -1,78 +1,92 @@
-# 🌍 ClimaUp
+# Responsive weather dashboard
 
-## 📌 Sobre o projeto
+[![CI](https://github.com/Nexude-ZainaV/responsive-weather-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/Nexude-ZainaV/responsive-weather-dashboard/actions/workflows/ci.yml)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?logo=javascript&logoColor=black)
+![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
-**Qual é o nome do projeto?**
+Live demo: https://nexude-zainav.github.io/responsive-weather-dashboard/?city=Manila
 
-[ClimaUp]
+Current conditions, the next 24 hours and a 7-day forecast for any city. It's plain
+HTML, CSS and JavaScript (ES modules), with no framework and no build step. The data
+comes from the free [Open-Meteo](https://open-meteo.com/) API, so there's no API key
+to manage.
 
-**Qual problema relacionado às mudanças climáticas o projeto pretende abordar?**
+| Phone (360px) | Desktop (1280px) |
+|---|---|
+| <img src="docs/screenshot-mobile.png" width="220" alt="Dashboard on a phone: stacked cards"> | <img src="docs/screenshot-desktop.png" width="560" alt="Dashboard on a desktop: three columns"> |
 
-[O desperdício de energia, descarte errado de lixo, etc...]
+## Features
 
-**Por que você escolheu esse problema?**
+- City search with autocomplete, built as an ARIA combobox (arrow keys, Enter, Escape)
+- "Use my location" through the Geolocation API
+- °C / °F toggle; wind switches between km/h and mph with it
+- A 24-hour strip with scroll snapping, and a 7-day list whose temperature bars share
+  one weekly scale
+- Recent places and the unit choice are remembered in `localStorage`
+- Shareable links such as `?city=Tokyo`
+- Light and dark themes from `prefers-color-scheme`, and no motion under
+  `prefers-reduced-motion`
 
-[Porque é o que mais tem a necessidade de ser resolvido.]
+## Responsive approach
 
-## 🎯 Objetivos
+The base CSS targets phones, and `min-width` queries add layout as the screen grows.
 
-**Qual é o objetivo principal do projeto?**
+| Breakpoint | Devices | Layout |
+|---|---|---|
+| < 600px | phones | header on two rows, cards stacked |
+| 600px | large phones, small tablets (portrait) | header on one row |
+| 900px | tablets (landscape), small laptops | current + hourly side by side, 7-day full width |
+| 1200px | desktops | three columns |
 
-[Esse site ajudará as pessoas a reduzir os impactos ambientais negativos, mostrar temperatura, previsão de chuva, etc...]
+Between breakpoints, fluid sizing does the work. I use `clamp()` for type and spacing,
+`repeat(auto-fit, minmax())` grids, `100dvh` so mobile browser bars don't cause
+overflow, and `minmax(0, 1fr)` columns so long content can't push the page sideways.
+Touch targets are at least 44px.
 
-**Quem é o público-alvo?**
+## How it's laid out
 
-[Principalmente jovens, adolescentes e crianças, pois creio que tirando as empresas e o governo, são os que mais ajudam nos impactos ambientais q vemos hoje.]
+```
+index.html               semantic markup, landmarks, live region for status messages
+src/js/main.js           state and events: search, geolocation, units, deep link
+src/js/api.js            Open-Meteo client: timeouts, cancellation, friendly errors
+src/js/render.js         DOM building with textContent only (no innerHTML, no XSS)
+src/js/format.js         pure formatting functions (tested)
+src/js/storage.js        guarded localStorage with validation of stored data (tested)
+src/js/weather-codes.js  WMO weather code -> label and icon
+src/css/styles.css       design tokens, mobile-first layout
+```
 
-**Como o projeto poderá ajudar?**
+A few things in the network code are deliberate:
 
-[Ele mostrará a vantagem de ajudar o meio ambiente e o que acontece caso isso não acontecer, além de mostrar das maneiras mais simples até as mais difíceis, como podemos ajudar.]
+- Every request has a timeout (`AbortSignal.timeout`) plus the caller's own signal,
+  combined with `AbortSignal.any`.
+- Stale requests get cancelled. Typing "Lon" and then "London" aborts the "Lon"
+  lookup, so a slower, older response can never overwrite a newer one.
+- Search is debounced by 300ms, so the geocoding API is called once per pause in
+  typing instead of on every keystroke.
 
-## 💡 Solução proposta
+## Run it
 
-**Como o programa funcionará?**
+Any static file server works. ES modules won't load from `file://`, so opening
+`index.html` directly isn't enough.
 
-[Ele fará desafios práticos para ajudar o meio ambiente.]
+```bash
+npm start                      # npx http-server on http://localhost:5173
+# or
+python -m http.server 5173
+```
 
-**Quais serão as principais funcionalidades?**
+The tests use Node's built-in test runner (Node 22+) with a fake `fetch` and a fake
+storage object:
 
-- [Desafios interativos do nível fácil ao difícil.]
-- [Mostrar o tempo, previsão de chuva, etc...]
-- [Mostrar em que ele ajudou concluindo cada desafio]
+```bash
+npm test
+```
 
-**Qual será o diferencial do projeto?**
+Pushes to `main` run the tests and deploy the site to GitHub Pages.
 
-[Ela pode ajudar as pessoas através de desafios a mudar o mundo pra melhor]
+## License
 
-## 🌱 Relação com as mudanças climáticas
-
-**Quais aspectos do tema serão abordados?**
-
-[Descartes de lixo errado, desperdício de energia, o que certas coisas podem causar, etc...]
-
-**Quais fontes serão utilizadas na pesquisa?**
-
-- [ChatGpt]
-- [Nações Unidas]
-
-## 🛠️ Tecnologias utilizadas
-
-**Quais tecnologias você pretende utilizar e por quê?**
-
-- Python: 3.14
-- Bibliotecas: Chart.js, Lucide, Leaflet, Lottie, Uiverse, Random, Sqlite3, Json
-- Frameworks: Bootstrap, Pico css, Animate.css
-- APIs ou banco de dados, se necessário: OpenAQ, OpenStreetMap, Open-Meteo
-
-## 🚀 Funcionalidades futuras
-
-**O que você pretende implementar em versões futuras?**
-
-[Eu adicionaria um sistema mais completo de desafios, uma ofensiva de dias, os desafios completos, pontuação, notícias sobre o assunto, etc...]
-
-## 👥 Autores
-
-[Ricardo Lima Bastos]
-
-
-
+[MIT](LICENSE). Weather data by Open-Meteo, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
