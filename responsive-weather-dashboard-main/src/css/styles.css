@@ -1,0 +1,264 @@
+/* styles.css - mobile-first. Base styles target phones (360px+); min-width media
+   queries add layout as space grows:
+     600px   large phones / small tablets portrait: header on one row
+     900px   tablets landscape / small laptops: current + hourly side by side
+     1200px  desktops: 7-day list gets its own column
+   Fluid type (clamp) and auto-fit grids handle everything in between. */
+
+:root {
+    --bg: #eef3fb;
+    --surface: #ffffff;
+    --surface-2: #f4f7fc;
+    --text: #172033;
+    --muted: #5a6680;
+    --accent: #1f4fb8;
+    --accent-contrast: #ffffff;
+    --error: #b42318;
+    --cold: #4f8df5;
+    --hot: #f59e0b;
+    --border: #d9e1ee;
+    --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 4px 12px rgb(16 24 40 / 6%);
+    --radius: 14px;
+    --space: clamp(0.75rem, 0.6rem + 0.75vw, 1.25rem);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0d1320;
+        --surface: #151d2e;
+        --surface-2: #1b2539;
+        --text: #e6ebf5;
+        --muted: #98a4bd;
+        --accent: #7aa2ff;
+        --accent-contrast: #0d1320;
+        --error: #ff8a80;
+        --border: #26314a;
+        --shadow: none;
+    }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100dvh; /* dvh: excludes mobile browser toolbars, unlike vh */
+    display: flex;
+    flex-direction: column;
+    font: 400 1rem/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+a { color: var(--accent); }
+h1, h2 { margin: 0; line-height: 1.2; }
+h2 { font-size: 1rem; color: var(--muted); font-weight: 600; margin-bottom: var(--space); }
+
+.visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: var(--space); top: var(--space); z-index: 10; background: var(--surface); padding: .5rem 1rem; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ---- header ------------------------------------------------------------------ */
+
+.app-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "brand actions" "search search";
+    gap: var(--space);
+    align-items: center;
+    width: 100%;
+    max-width: 75rem;   /* same column as the dashboard */
+    margin: 0 auto;
+    padding: var(--space);
+}
+.brand { grid-area: brand; font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem); }
+.search { grid-area: search; position: relative; }
+.header-actions { grid-area: actions; display: flex; gap: .5rem; align-items: center; }
+
+@media (min-width: 600px) {
+    .app-header {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "brand search actions";
+    }
+    .search { max-width: 32rem; }
+}
+
+.search input {
+    width: 100%;
+    padding: .75rem 1rem;
+    font: inherit;
+    color: inherit;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    box-shadow: var(--shadow);
+}
+
+.suggestions {
+    position: absolute;
+    inset: calc(100% + 4px) 0 auto;
+    z-index: 5;
+    margin: 0;
+    padding: .25rem;
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+.suggestions li { padding: .6rem .8rem; border-radius: 8px; cursor: pointer; }
+.suggestions li:hover, .suggestions li[aria-selected="true"] { background: var(--surface-2); }
+
+.icon-button, .unit-toggle button {
+    min-width: 44px; min-height: 44px; /* touch target */
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 999px;
+}
+.unit-toggle { display: flex; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); padding: 2px; }
+.unit-toggle button { border: 0; background: transparent; }
+.unit-toggle button[aria-checked="true"] { background: var(--accent); color: var(--accent-contrast); }
+
+/* ---- recent places ------------------------------------------------------------ */
+
+.recent { width: 100%; max-width: 75rem; margin: 0 auto; }
+.recent ul {
+    display: flex; gap: .5rem; margin: 0; padding: 0 var(--space);
+    list-style: none; overflow-x: auto; scrollbar-width: none;
+}
+.chip {
+    white-space: nowrap;
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    min-height: 36px;
+}
+
+/* ---- dashboard grid ----------------------------------------------------------- */
+
+.dashboard {
+    flex: 1;
+    width: 100%;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: var(--space);
+    display: grid;
+    gap: var(--space);
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    align-items: start; /* cards keep their own height instead of stretching to the row */
+}
+
+@media (min-width: 900px) {
+    .dashboard { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+    .message, .daily { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1200px) {
+    .dashboard { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr); }
+    .message { grid-column: 1 / -1; }
+    .daily { grid-column: auto; grid-row: span 1; }
+}
+
+.dashboard.is-loading .card { opacity: .5; transition: opacity .2s; }
+
+.message { margin: 0; color: var(--muted); }
+.message.is-error { color: var(--error); font-weight: 600; }
+.message[hidden] { display: none; }
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space);
+    box-shadow: var(--shadow);
+    min-width: 0;
+}
+
+/* ---- current conditions -------------------------------------------------------- */
+
+.current .place { color: var(--text); font-size: 1.15rem; }
+.current-main { display: flex; align-items: center; gap: .5rem; }
+.current-icon { font-size: clamp(3rem, 2rem + 4vw, 4.5rem); }
+.current-temp { margin: 0; font-size: clamp(3rem, 2.2rem + 4vw, 5rem); font-weight: 300; }
+.current-label { margin: 0 0 var(--space); color: var(--muted); }
+
+.current-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    gap: .75rem;
+    margin: 0;
+}
+.current-details div { background: var(--surface-2); border-radius: 10px; padding: .6rem .75rem; }
+.current-details dt { font-size: .8rem; color: var(--muted); }
+.current-details dd { margin: 0; font-weight: 600; }
+
+/* ---- hourly strip: horizontal scroll with snap on touch ---------------------- */
+
+.hour-strip {
+    display: flex;
+    gap: .5rem;
+    margin: 0; padding: 0 0 .5rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+}
+.hour {
+    flex: 0 0 4.5rem;
+    display: grid;
+    justify-items: center;
+    gap: .25rem;
+    padding: .75rem .25rem;
+    background: var(--surface-2);
+    border-radius: 12px;
+    scroll-snap-align: start;
+}
+.hour-time, .hour-rain { font-size: .8rem; color: var(--muted); }
+.hour-icon { font-size: 1.5rem; }
+.hour-temp { font-weight: 600; }
+
+/* ---- 7-day list with range bars ------------------------------------------------- */
+
+.day-list { margin: 0; padding: 0; list-style: none; }
+.day {
+    display: grid;
+    grid-template-columns: 3.5rem 1.75rem 3.5rem 2.75rem minmax(3rem, 1fr) 2.75rem;
+    align-items: center;
+    gap: .5rem;
+    padding: .55rem 0;
+    border-top: 1px solid var(--border);
+}
+.day:first-child { border-top: 0; }
+.day-name { font-weight: 600; }
+.day-icon { font-size: 1.3rem; text-align: center; }
+.day-rain { font-size: .8rem; color: var(--muted); }
+.day-low { color: var(--muted); text-align: right; }
+
+.range-bar { position: relative; height: 6px; border-radius: 3px; background: var(--surface-2); }
+.range-fill {
+    position: absolute;
+    inset: 0 var(--end) 0 var(--start);
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--cold), var(--hot));
+}
+
+/* Very narrow phones (under 360px): drop the rain column to keep one line per day. */
+@media (max-width: 359px) {
+    .day { grid-template-columns: 3rem 1.5rem 2.5rem minmax(2rem, 1fr) 2.5rem; }
+    .day-rain { display: none; }
+}
+
+.app-footer { padding: var(--space); text-align: center; font-size: .85rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
